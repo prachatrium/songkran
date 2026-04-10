@@ -656,23 +656,33 @@ let bgmAudio = null;
 let dipAudio = null;
 let pourAudio = null;
 let audioInited = false;
+let bgmPlaying = false;
 
 function initAllAudio() {
-  if (audioInited) return;
-  audioInited = true;
+  if (!audioInited) {
+    audioInited = true;
 
-  // BGM from external file
-  bgmAudio = new Audio('bgm.mp3');
-  bgmAudio.loop = true;
-  bgmAudio.volume = 0.3;
-  bgmAudio.play().catch(() => {});
+    // BGM from external file - preload it
+    bgmAudio = new Audio();
+    bgmAudio.preload = 'auto';
+    bgmAudio.loop = true;
+    bgmAudio.volume = 0.3;
+    bgmAudio.src = 'bgm.mp3';
 
-  // SFX from embedded base64
-  dipAudio = new Audio(b64toBlob(DIP_B64, 'audio/mpeg'));
-  dipAudio.volume = 0.7;
+    // SFX from embedded base64
+    dipAudio = new Audio(b64toBlob(DIP_B64, 'audio/mpeg'));
+    dipAudio.volume = 0.7;
 
-  pourAudio = new Audio(b64toBlob(POUR_B64, 'audio/mpeg'));
-  pourAudio.volume = 0.7;
+    pourAudio = new Audio(b64toBlob(POUR_B64, 'audio/mpeg'));
+    pourAudio.volume = 0.7;
+  }
+
+  // Try to play BGM on every click until it succeeds
+  if (bgmAudio && !bgmPlaying && !bgmMuted) {
+    bgmAudio.play().then(() => {
+      bgmPlaying = true;
+    }).catch(() => {});
+  }
 }
 
 // Browser requires user interaction before playing audio
@@ -699,7 +709,12 @@ function toggleBGM() {
     return;
   }
   bgmMuted = !bgmMuted;
-  bgmAudio.muted = bgmMuted;
+  if (bgmMuted) {
+    bgmAudio.pause();
+    bgmPlaying = false;
+  } else {
+    bgmAudio.play().then(() => { bgmPlaying = true; }).catch(() => {});
+  }
   document.getElementById('bgm-toggle').textContent = bgmMuted ? '🔇' : '🔊';
 }
 
