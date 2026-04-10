@@ -502,6 +502,32 @@ body {
   100% { transform: translateY(100vh) rotate(360deg) translateX(80px); opacity: 0; }
 }
 
+/* BGM toggle button */
+.bgm-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgba(139, 69, 19, 0.3);
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  z-index: 50;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.bgm-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
 /* Custom cursor - applies to entire page during game */
 .cursor-bowl, .cursor-bowl * {
   cursor: url('data:image/png;base64,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') 24 24, pointer;
@@ -509,6 +535,9 @@ body {
 </style>
 </head>
 <body>
+
+<!-- BGM Toggle Button (visible on all screens) -->
+<button class="bgm-toggle" id="bgm-toggle" onclick="toggleBGM()" title="เปิด/ปิดเพลง">🔊</button>
 
 <!-- SCREEN 1: Creator -->
 <div id="creator-screen" class="screen active">
@@ -587,6 +616,8 @@ body {
       ✨ ประเสริฐ ประสบโชค ประหยัด ✨
     </p>
     <button class="btn-restart" onclick="restartGame()">🔄 เริ่มใหม่</button>
+    <button class="btn-copy" style="margin-top:10px" id="finale-copy-btn" onclick="copyCurrentLink()">📋 คัดลอกลิงก์ส่งต่อ</button>
+    <div class="copy-toast" id="finale-copy-toast">✅ คัดลอกแล้ว!</div>
   </div>
 </div>
 
@@ -658,6 +689,18 @@ function playPourSound() {
   if (!pourAudio) return;
   pourAudio.currentTime = 0;
   pourAudio.play().catch(() => {});
+}
+
+let bgmMuted = false;
+
+function toggleBGM() {
+  if (!bgmAudio) {
+    initAllAudio();
+    return;
+  }
+  bgmMuted = !bgmMuted;
+  bgmAudio.muted = bgmMuted;
+  document.getElementById('bgm-toggle').textContent = bgmMuted ? '🔇' : '🔊';
 }
 
 // ========== ENCODING/DECODING ==========
@@ -740,7 +783,7 @@ function startGame(name, blessings) {
   waterScooped = false;
   blessingIndex = 0;
 
-  document.getElementById('game-recipient-name').textContent = 'สำหรับ ' + name;
+  document.getElementById('game-recipient-name').textContent = 'สุขสันต์วันสงกรานต์นะ ' + name;
   document.getElementById('instruction-text').textContent = '💧 แตะที่ขันเงินเพื่อตักน้ำ';
   document.getElementById('water-status').innerHTML = '';
   document.getElementById('zone-bowl').style.display = 'block';
@@ -854,6 +897,25 @@ function closeBlessingPopup() {
 
 function restartGame() {
   startGame(gameData.name, gameData.blessings);
+}
+
+function copyCurrentLink() {
+  const link = generatedLink || window.location.href;
+  navigator.clipboard.writeText(link).then(() => {
+    const toast = document.getElementById('finale-copy-toast');
+    toast.style.display = 'inline-block';
+    setTimeout(() => toast.style.display = 'none', 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = link;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const toast = document.getElementById('finale-copy-toast');
+    toast.style.display = 'inline-block';
+    setTimeout(() => toast.style.display = 'none', 2000);
+  });
 }
 
 // ========== PETALS ==========
